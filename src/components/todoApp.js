@@ -1,27 +1,26 @@
 import { useState } from "react";
+import Todo from "./todo";
 
 export default function TodoApp() {
   const [title, setTitle] = useState("Hola");
   const [todos, settodos] = useState([]);
-  
 
-
-  function handleChange(event){
+  function handleChange(event) {
     const value = event.target.value;
 
     setTitle(value);
   }
 
-  function handleSubmit(e){
+  function handleSubmit(e) {
     e.preventDefault();
 
     const newTodo = {
-      id:crypto.randomUUID(),
-      title:title,
+      id: crypto.randomUUID(),
+      title: title,
       completed: false,
     };
 
-    const temp= [...todos];
+    const temp = [...todos];
     temp.unshift(newTodo);
 
     settodos(temp);
@@ -37,9 +36,12 @@ export default function TodoApp() {
           value="Create todo"
           className="buttonCreate"
         />
-
-
       </form>
+      <div className="todosContainer">
+        {todos.map((item) => (
+          <Todo key={item.id} item={item} onUpdate={handleUpdate}/>
+        ))}
+      </div>
     </div>
   );
 }
